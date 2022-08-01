@@ -22,21 +22,21 @@ const initialState = {
   newNote: {},
   categories: ["Work", "Personal", "School", "Family", "Other"],
   newCategory: [],
-  notes: [
-    {
-      id: 1231231,
-      title: "Note 1",
-      body: "This is the body of note 1",
-      category: ["Work"],
-    },
-    {
-      id: 3213212,
-      title: "Note 2",
-      body: "This is the body of note 2",
-      category: ["Personal"],
-    },
-  ],
-  // notes: [],
+  // notes: [
+  //   {
+  //     id: 1231231,
+  //     title: "Note 1",
+  //     body: "This is the body of note 1",
+  //     category: ["Work"],
+  //   },
+  //   {
+  //     id: 3213212,
+  //     title: "Note 2",
+  //     body: "This is the body of note 2",
+  //     category: ["Personal"],
+  //   },
+  // ],
+  notes: [],
   notesToShow: [],
   archivedNotes: [],
   deletedNotes: [],

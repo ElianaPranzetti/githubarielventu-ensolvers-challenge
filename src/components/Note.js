@@ -1,6 +1,6 @@
 import { useState, forwardRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import EditNote from "./EditNote";
+// import EditNote from "./EditNote";
 import {
   setArchivedNote,
   setUnarchivedNote,
@@ -25,6 +25,7 @@ import {
   Tooltip,
   Divider,
   Alert,
+  AlertTitle
 } from "@mui/material";
 import { grey } from "@mui/material/colors";
 import CloseIcon from "@mui/icons-material/Close";
@@ -46,7 +47,7 @@ const Note = ({ title, body, id, category }) => {
 
   const handleClickOpenDialog = () => {
     dispatch(setOpenDialog(true));
-    setOpen(false)
+    setOpen(false);
   };
 
   const handleCloseDialog = () => {
@@ -86,11 +87,14 @@ const Note = ({ title, body, id, category }) => {
     setOpen(false);
   };
 
-  const handleEdit = (e) => {
-    // console.log(e)
-    dispatch(setNotesToShow());
-    setOpen(false);
-  };
+  // const handleEdit = () => {
+  //   return (
+  //     <Alert severity="info">
+  //       <AlertTitle>Info</AlertTitle>
+  //       Feature in development — <strong>coming soon!</strong>
+  //     </Alert>
+  //   );
+  // };
 
   const isArchived = archivedNotes.some((note) => note.id === id);
   // console.log("isArchived:", isArchived);
@@ -166,10 +170,10 @@ const Note = ({ title, body, id, category }) => {
         </DialogContent>
         <Divider />
         <DialogActions mb={1}>
-          <Tooltip title="Edit">
+          <Tooltip title="Feature in development">
             <IconButton
               aria-label="edit"
-              onClick={handleClickOpenDialog}
+              // onClick={handleEdit}
               sx={{
                 color: (theme) => theme.palette.grey[500],
               }}
@@ -202,7 +206,7 @@ const Note = ({ title, body, id, category }) => {
               </IconButton>
             </Tooltip>
           )}
-
+          {!isArchived ? (
           <Tooltip title="Delete">
             <IconButton
               aria-label="delete"
@@ -213,23 +217,21 @@ const Note = ({ title, body, id, category }) => {
             >
               <DeleteIcon />
             </IconButton>
-          </Tooltip>
+            </Tooltip>
+          ) : null}
         </DialogActions>
         <DialogActions>
           <Button onClick={handleClose}>Exit</Button>
-          <Button onClick={handleClose} autoFocus>
-            Save
-          </Button>
         </DialogActions>
       </Dialog>
       {/* Dialog EDIT */}
-      <Dialog
+      {/* <Dialog
         open={openDialog}
         TransitionComponent={Transition}
         keepMounted
         onClose={handleCloseDialog}
       >
-        <DialogTitle>{"Create / Edit"}</DialogTitle>
+        <DialogTitle>{"Edit"}</DialogTitle>
         <DialogContent>
           <DialogContentText>
             <EditNote
@@ -240,7 +242,7 @@ const Note = ({ title, body, id, category }) => {
             />
           </DialogContentText>
         </DialogContent>
-      </Dialog>
+      </Dialog> */}
     </Card>
   );
 };

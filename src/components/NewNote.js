@@ -27,8 +27,6 @@ const MenuProps = {
   },
 };
 
-
-
 const NewNote = () => {
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
@@ -55,12 +53,10 @@ const NewNote = () => {
   };
   // console.log("newNote:", newNote)
 
-
-  
   const handleSubmit = (e) => {
     e.preventDefault();
     // console.log(output);
-   
+
     idAutoIncrement();
     setNewNote({
       id: idNote ? idNote : 1,
@@ -68,7 +64,7 @@ const NewNote = () => {
       body: body,
       category: category,
     });
-    console.log("newNote:", newNote)
+    console.log("newNote:", newNote);
     dispatch(createNote(newNote));
     setTitle("");
     setBody("");
@@ -85,7 +81,8 @@ const NewNote = () => {
   };
 
   const handleChangeCategory = (e) => {
-    console.log(e.target.value);
+    console.log("input", e.target.value);
+    console.log("category", category);
     setCategory(e.target.value);
     setNewNote({
       ...newNote,
@@ -122,37 +119,35 @@ const NewNote = () => {
             name="body"
           />
         </Box>
-          <FormControl sx={{ m: 1, width: "25ch" }}>
-            <InputLabel id="demo-multiple-chip-label">Category</InputLabel>
-            <Select
-              labelId="demo-multiple-chip-label"
-              id="demo-multiple-chip"
-              multiple
-              value={category}
-              onChange={handleChangeCategory}
-              input={
-                <OutlinedInput id="select-multiple-chip" label="Category" />
-              }
-              renderValue={(selected) => (
-                <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
-                  {selected.map((value) => (
-                    <Chip key={value} label={value} />
-                  ))}
-                </Box>
-              )}
-              MenuProps={MenuProps}
-            >
-              {listCategories?.map((cat) => (
-                <MenuItem key={cat} value={cat}>
-                  {cat}
-                </MenuItem>
-              ))}
-            </Select>
-            <DialogActions>
-              <Button onClick={() => handleClose()}>Cancel</Button>
-              <Button onClick={handleSubmit}>Save</Button>
-            </DialogActions>
-          </FormControl>
+        <FormControl sx={{ m: 1, width: "25ch" }}>
+          <InputLabel id="demo-multiple-chip-label">Category</InputLabel>
+          <Select
+            labelId="demo-multiple-chip-label"
+            id="demo-multiple-chip"
+            multiple
+            value={category}
+            onChange={handleChangeCategory}
+            input={<OutlinedInput id="select-multiple-chip" label="Category" />}
+            renderValue={(selected) => (
+              <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
+                {selected.map((value) => (
+                  <Chip key={value} label={value} />
+                ))}
+              </Box>
+            )}
+            MenuProps={MenuProps}
+          >
+            {listCategories?.map((cat) => (
+              <MenuItem key={cat} value={cat}>
+                {cat}
+              </MenuItem>
+            ))}
+          </Select>
+          <DialogActions>
+            <Button onClick={() => handleClose()}>Cancel</Button>
+            <Button onClick={handleSubmit}>Save</Button>
+          </DialogActions>
+        </FormControl>
       </Box>
     </form>
   );

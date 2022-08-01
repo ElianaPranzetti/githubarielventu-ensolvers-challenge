@@ -165,7 +165,7 @@ const NavBar = (props) => {
             keepMounted
             onClose={handleClose}
           >
-            <DialogTitle>{"Create / Edit"}</DialogTitle>
+            <DialogTitle>{"New Note"}</DialogTitle>
             <DialogContent>
               <DialogContentText>
                 <NewNote />

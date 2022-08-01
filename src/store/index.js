@@ -1,24 +1,30 @@
-import { createStore, applyMiddleware, compose } from 'redux';
-// import throttle from 'lodash/throttle';
-import rootReducer from '../reducers/index';
-import thunk from 'redux-thunk';
-// import {loadState, saveState} from '../localStorage';
+import { createStore } from "redux";
+import rootReducer from "../reducers";
 
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-// const persistedState = loadState()
+function saveToLocalStorage(state) {
+  try {
+    const serialisedState = JSON.stringify(state);
+    localStorage.setItem("persistantState", serialisedState);
+  } catch (e) {
+    console.warn(e);
+  }
+}
+
+function loadFromLocalStorage() {
+  try {
+    const serialisedState = localStorage.getItem("persistantState");
+    if (serialisedState === null) return undefined;
+    return JSON.parse(serialisedState);
+  } catch (e) {
+    console.warn(e);
+    return undefined;
+  }
+}
 
 const store = createStore(
   rootReducer,
-  // persistedState,
-  composeEnhancers(applyMiddleware(thunk))
-);
+  loadFromLocalStorage());
 
-// store.subscribe(throttle(() => {
-//   console.debug('saveState')
-//   const { notes } = store.getState()
-//   saveState({
-//     notes
-//   })
-// }, 1000))
+store.subscribe(() => saveToLocalStorage(store.getState()));
 
 export default store;
