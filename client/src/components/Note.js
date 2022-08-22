@@ -1,13 +1,15 @@
-import { useState, forwardRef } from "react";
+import { useState, forwardRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 // import EditNote from "./EditNote";
 import {
   setArchivedNote,
   setUnarchivedNote,
-  setNotesToShow,
+  getNotes,
   setDeleteNote,
   setOpenAlert,
   setOpenDialog,
+  setIdNoteToDelete,
+  setNotesToShow,
 } from "../actions";
 import {
   Slide,
@@ -25,7 +27,7 @@ import {
   Tooltip,
   Divider,
   Alert,
-  AlertTitle
+  AlertTitle,
 } from "@mui/material";
 import { grey } from "@mui/material/colors";
 import CloseIcon from "@mui/icons-material/Close";
@@ -54,7 +56,7 @@ const Note = ({ title, body, id, category }) => {
     dispatch(setOpenDialog(false));
   };
 
-  console.log(title, body, id, category);
+  // console.log(title, body, id, category);
   const handleClickOpen = (e) => {
     console.log("id:", id);
     // console.log(e);
@@ -67,24 +69,45 @@ const Note = ({ title, body, id, category }) => {
 
   const handleArchive = (e) => {
     // console.log(e)
-    dispatch(setArchivedNote(id));
-    dispatch(setNotesToShow());
+    // dispatch(setArchivedNote(id));
+    dispatch(
+      setArchivedNote({
+        id: id,
+        archived: true,
+      })
+    );
     setOpen(false);
+    dispatch(getNotes());
+    // dispatch(setNotesToShow());
   };
 
   const handleRestore = (e) => {
     // console.log(e)
+    dispatch(
+      setArchivedNote({
+        id: id,
+        archived: false,
+      })
+    );
     dispatch(setUnarchivedNote(id));
+    dispatch(getNotes());
     dispatch(setNotesToShow());
     setOpen(false);
   };
 
-  const handleDelete = (e) => {
-    // console.log(e)
-    dispatch(setDeleteNote(id));
-    dispatch(setOpenAlert(true));
+  const handleDelete = () => {
+    dispatch(
+      setDeleteNote({
+        id: id,
+        deleted: true,
+      })
+    );
+    dispatch(setIdNoteToDelete(id));
+    dispatch(getNotes());
     dispatch(setNotesToShow());
+    dispatch(setOpenAlert(true));
     setOpen(false);
+    // props.history.push('/')
   };
 
   // const handleEdit = () => {
@@ -96,7 +119,12 @@ const Note = ({ title, body, id, category }) => {
   //   );
   // };
 
-  const isArchived = archivedNotes.some((note) => note.id === id);
+  // useEffect(() => {
+  //   dispatch(getNotes());
+  //   dispatch(setNotesToShow());
+  // }, [dispatch]);
+
+  const isArchived = archivedNotes?.some((note) => note.id === id);
   // console.log("isArchived:", isArchived);
 
   return (
@@ -207,16 +235,16 @@ const Note = ({ title, body, id, category }) => {
             </Tooltip>
           )}
           {!isArchived ? (
-          <Tooltip title="Delete">
-            <IconButton
-              aria-label="delete"
-              onClick={handleDelete}
-              sx={{
-                color: (theme) => theme.palette.grey[500],
-              }}
-            >
-              <DeleteIcon />
-            </IconButton>
+            <Tooltip title="Delete">
+              <IconButton
+                aria-label="delete"
+                onClick={handleDelete}
+                sx={{
+                  color: (theme) => theme.palette.grey[500],
+                }}
+              >
+                <DeleteIcon />
+              </IconButton>
             </Tooltip>
           ) : null}
         </DialogActions>

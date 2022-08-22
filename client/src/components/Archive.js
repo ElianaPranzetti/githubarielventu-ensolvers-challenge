@@ -1,5 +1,13 @@
-import { Typography, Container, Box, Button, Divider, Tooltip, Fab } from "@mui/material";
-import UnarchiveIcon from '@mui/icons-material/Unarchive';
+import {
+  Typography,
+  Container,
+  Box,
+  Button,
+  Divider,
+  Tooltip,
+  Fab,
+} from "@mui/material";
+import UnarchiveIcon from "@mui/icons-material/Unarchive";
 import { Link } from "react-router-dom";
 import { grey } from "@mui/material/colors";
 import { useSelector, useDispatch } from "react-redux";
@@ -12,9 +20,9 @@ const Archive = () => {
 
   // console.log(archivedNotes.length);
   const handleClick = () => {
-    dispatch(setUnarchivedAll());
+    dispatch(setUnarchivedAll(false));
     dispatch(setNotesToShow());
-  }
+  };
 
   return (
     <>
@@ -24,23 +32,23 @@ const Archive = () => {
         alignItems="center"
         justifyContent="center"
       >
-      <Typography variant="h4" align="center" m={2}>
-        Archived Notes
-      </Typography>
-      <Tooltip title="Unarchive All Notes">
-        <Fab
-          size="small"
-          color="white"
-          aria-label="archive"
-          sx={{
-            mx: { xs: 1 },
+        <Typography variant="h4" align="center" m={2}>
+          Archived Notes
+        </Typography>
+        <Tooltip title="Unarchive All Notes">
+          <Fab
+            size="small"
+            color="white"
+            aria-label="archive"
+            sx={{
+              mx: { xs: 1 },
             }}
-        onClick={handleClick}
-        >
-          <UnarchiveIcon />
+            onClick={handleClick}
+          >
+            <UnarchiveIcon />
           </Fab>
         </Tooltip>
-        </Box>
+      </Box>
       <Divider />
 
       <Container
@@ -51,7 +59,7 @@ const Archive = () => {
       >
         {!archivedNotes.length ? (
           <Typography variant="h6" align="center" padding={5} color={grey[800]}>
-            Nothing to show yet
+            Nothing to show here
           </Typography>
         ) : (
           <Box
@@ -66,15 +74,18 @@ const Archive = () => {
               },
             }}
           >
-            {archivedNotes.map((note) => (
-              <Note
-                key={note.id}
-                title={note.title}
-                body={note.body}
-                id={note.id}
-                category={note.category}
-              />
-            ))}
+            {archivedNotes?.map(
+              (note) =>
+                !note.deleted && note.archived && (
+                  <Note
+                    key={note.id}
+                    title={note.title}
+                    body={note.body}
+                    id={note.id}
+                    category={note.categories?.map((category) => category.name)}
+                  />
+                )
+            )}
           </Box>
         )}
         <Box

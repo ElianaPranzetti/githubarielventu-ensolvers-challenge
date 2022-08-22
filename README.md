@@ -2,11 +2,25 @@
 
 This project was developed with the next technologies:
 
+Frontend
+
 - React
 - Redux
 - Material UI
 
-### [Deployed App](https://notesapp-av.vercel.app/)
+Backend
+
+- NodeJS
+- Express
+- Sequelize
+
+Database
+
+- PostgreSQL
+
+### [Vercel deploy (Frontend)](https://notesapp-av.vercel.app/)
+
+### [Heroku deploy (Backend)](https://notesappi.herokuapp.com/)
 
 ## Available Scripts (NodeJS must be previously installed)
 
@@ -24,7 +38,7 @@ You may also see any lint errors in the console.
 
 ### In Linux enviroment
 
-* [ ] Bash script available: "start.sh" (install packages and dependencies, and run the App)
+* [ ] Two Bash scripts available: "start.sh" (One in "client" folder and one in "api" folder. Install packages and dependencies, and run the App)
 
 ## Packages versions
 

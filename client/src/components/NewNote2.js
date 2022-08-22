@@ -27,20 +27,28 @@ const MenuProps = {
   },
 };
 
-const NewNote = () => {
-  const [title, setTitle] = useState("");
-  const [body, setBody] = useState("");
-  const [category, setCategory] = useState([]);
+let date = new Date();
+let output =
+  String(date.getFullYear()).padStart(4, "0") +
+  "-" +
+  String(date.getMonth() + 1).padStart(2, "0") +
+  "-" +
+  date.getDate();
+
+const NewNote = ({ title, body, id, category }) => {
   const listCategories = useSelector((state) => state.categories);
   const [newNote, setNewNote] = useState({
     id: "",
     title: "",
     body: "",
     category: [],
+    createdAt: "",
+    updatedAt: "",
   });
   const idNote = useSelector((state) => state.idNote);
   const open = useSelector((state) => state.isOpen);
   const dispatch = useDispatch();
+  const [valueSelect, setValueSelect] = useState([]);
 
   const handleClose = () => {
     dispatch(setOpenDialog(false));
@@ -55,16 +63,18 @@ const NewNote = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // console.log(output);
 
+    // console.log(output);
     idAutoIncrement();
     setNewNote({
-      id: idNote ? idNote : 1,
+      id: idNote,
       title: title,
       body: body,
-      category: category,
+      category: valueSelect,
+      createdAt: output,
+      updatedAt: output,
     });
-    console.log("newNote:", newNote);
+    // console.log("newNote:", newNote)
     dispatch(createNote(newNote));
     setTitle("");
     setBody("");
@@ -81,12 +91,16 @@ const NewNote = () => {
   };
 
   const handleChangeCategory = (e) => {
-    console.log("input", e.target.value);
-    console.log("category", category);
-    setCategory(e.target.value);
+    const {
+      target: { value },
+    } = e;
+    setCategory(
+      // On autofill we get a stringified value.
+      typeof value === "string" ? value.split(",") : value
+    );
     setNewNote({
       ...newNote,
-      category: e.target.value,
+      category: category,
     });
   };
 
@@ -119,30 +133,66 @@ const NewNote = () => {
             name="body"
           />
         </Box>
-        <FormControl sx={{ m: 1, width: "25ch" }}>
-          <InputLabel id="demo-multiple-chip-label">Category</InputLabel>
-          <Select
-            labelId="demo-multiple-chip-label"
-            id="demo-multiple-chip"
+        <FormControl>
+          {/* <InputLabel id="demo-multiple-chip-label">Category</InputLabel> */}
+          {/*  <Select
+          labelId="demo-multiple-chip-label"
+          id="demo-multiple-chip"
+          multiple
+          value={category}
+          onChange={handleChangeCategory}
+          input={<OutlinedInput id="select-multiple-chip" label="Category" />}
+          renderValue={(selected) => (
+            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+              {selected.map((value) => (
+                <Chip key={value} label={value} />
+              ))}
+            </Box>
+          )}
+          MenuProps={MenuProps}
+        >
+          {listCategories?.map((cat) => (
+            <MenuItem
+              key={cat}
+              value={cat}
+             
+            >
+              {cat}
+            </MenuItem>
+          ))}
+            </Select> */}
+          <Autocomplete
+            value={valueSelect}
+            onChange={(event, newValue) => {
+              setValueSelect(newValue);
+              setNewNote({
+                ...newNote,
+                category: valueSelect,
+              });
+            }}
             multiple
-            value={category}
-            onChange={handleChangeCategory}
-            input={<OutlinedInput id="select-multiple-chip" label="Category" />}
-            renderValue={(selected) => (
-              <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
-                {selected.map((value) => (
-                  <Chip key={value} label={value} />
-                ))}
-              </Box>
+            ml={0}
+            id="tags-filled"
+            options={listCategories.map((option) => option)}
+            freeSolo
+            renderTags={(valueSelect, getTagProps) =>
+              valueSelect.map((option, index) => (
+                <Chip
+                  variant="outlined"
+                  label={option}
+                  {...getTagProps({ index })}
+                />
+              ))
+            }
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                variant="outlined"
+                label="Category"
+                placeholder="Search"
+              />
             )}
-            MenuProps={MenuProps}
-          >
-            {listCategories?.map((cat) => (
-              <MenuItem key={cat} value={cat}>
-                {cat}
-              </MenuItem>
-            ))}
-          </Select>
+          />
           <DialogActions>
             <Button onClick={() => handleClose()}>Cancel</Button>
             <Button onClick={handleSubmit}>Save</Button>

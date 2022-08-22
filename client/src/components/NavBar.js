@@ -1,6 +1,6 @@
-import { forwardRef, useState } from "react";
+import { forwardRef, useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { setOpenDialog } from "../actions";
+import { setOpenDialog, getNotes, setNotesToShow } from "../actions";
 import { Link } from "react-router-dom";
 import NewNote from "./NewNote";
 import ToggleDM from "./ToggleDM";
@@ -47,7 +47,8 @@ const NavBar = (props) => {
     dispatch(setOpenDialog(false));
   };
 
-  console.log(props);
+  
+  // console.log(props);
   return (
     <AppBar position="static">
       <Container maxWidth="xl">
@@ -103,7 +104,7 @@ const NavBar = (props) => {
                 component= {Link}
                    to="/archive"
                 >
-                <Badge color="secondary"  badgeContent={archived.length} >
+                <Badge color="secondary"  badgeContent={archived?.length} >
                   <InventoryIcon />
                 </Badge>
                   </Fab>
