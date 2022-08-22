@@ -22,6 +22,8 @@ Database
 
 ### [Heroku deploy (Backend)](https://notesappi.herokuapp.com/)
 
+### Postman Collection: File "postman_collection.json" in "api" folder.
+
 ## Available Scripts (NodeJS must be previously installed)
 
 In the project directory, you can run (NodeJS must be previously installed):
@@ -46,4 +48,6 @@ NodeJS v16.13.1
 
 NPM 8.1.2
 
-For more info view file *package.json*
+React 18.2.0
+
+For more info view files *package.json* in "client" and "api" folders.
