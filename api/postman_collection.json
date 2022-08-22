@@ -1,0 +1,146 @@
+{
+	"info": {
+		"_postman_id": "99708708-1bef-49bb-9465-0f42d6e2898c",
+		"name": "notesApp",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get All Notes",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3001/notes",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"notes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Note by ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3001/notes/1fb75ae8-3816-4daf-ac6e-dd77d0029354",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"notes",
+						"1fb75ae8-3816-4daf-ac6e-dd77d0029354"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Del Note by ID",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\" : \"15d0fd77-ddd3-42fb-9f84-3fb91dabc910\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3001/notes/d827f847-a4fc-4bb9-8b0e-2ae4b5ac57bb",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"notes",
+						"d827f847-a4fc-4bb9-8b0e-2ae4b5ac57bb"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Categories",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3001/categories",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"categories"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post New Category",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\" : \"Nueva Cat\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3001/categories",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"categories"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post New Note",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"Nueva nota\",\r\n    \"body\": \"Texto de la neva nota\",\r\n    \"categoryId\": [1,4,2]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3001/notes",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"notes"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
